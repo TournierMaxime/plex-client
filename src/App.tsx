@@ -5,6 +5,7 @@ import Nav from "./components/Nav"
 import { Box } from "@mui/material"
 import { Fragment } from "react"
 import Title from "./components/Title"
+import Hubs from "./pages/Hubs"
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           <Nav />
           <Routes>
             <Route index element={<Home />} />
-            <Route path="/activities" element={<Home />} />
+            <Route path="/hubs" element={<Hubs />} />
           </Routes>
         </BrowserRouter>
       </Box>

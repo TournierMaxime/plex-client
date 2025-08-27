@@ -25,7 +25,7 @@ export default function Nav() {
     setMobileOpen((prevState) => !prevState)
   }
 
-  const navItems = [{ key: 0, name: "Activities", path: "/activities" }]
+  const navItems = [{ key: 0, name: "Hubs", path: "/hubs" }]
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
@@ -53,7 +53,13 @@ export default function Nav() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar component="nav">
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between", backgroundColor: BACKGROUND_COLOR }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            backgroundColor: BACKGROUND_COLOR,
+          }}
+        >
           <Link
             style={{ textDecoration: "none", color: "#fff", cursor: "pointer" }}
             to={"/"}
