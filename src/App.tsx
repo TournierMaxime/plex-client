@@ -7,6 +7,8 @@ import { Fragment } from "react"
 import Title from "./components/Title"
 import Hubs from "./pages/Hubs"
 import Libraries from "./pages/Libraries"
+import PlaylistsPage from "./pages/Playlists"
+import OnePlaylist from "./features/playlist/pages/OnePlaylist"
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/hubs" element={<Hubs />} />
             <Route path="/libraries" element={<Libraries />} />
+            <Route path="/playlists" element={<PlaylistsPage />} />
+            <Route path="/playlists/:id" element={<OnePlaylist />} />
           </Routes>
         </BrowserRouter>
       </Box>

@@ -28,6 +28,7 @@ export default function Nav() {
   const navItems = [
     { key: 0, name: "Hubs", path: "/hubs" },
     { key: 1, name: "Libraries", path: "/libraries" },
+    { key: 2, name: "Playlists", path: "/playlists" },
   ]
 
   const drawer = (
