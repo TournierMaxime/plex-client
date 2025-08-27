@@ -27,7 +27,7 @@ export default function AllDevices() {
   return (
     <Card raised sx={{ marginTop: "1em" }}>
       <CardHeader
-        title="All Devices"
+        title="Devices"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}
       />
       <TableContainer>

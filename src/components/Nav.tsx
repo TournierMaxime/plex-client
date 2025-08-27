@@ -25,7 +25,10 @@ export default function Nav() {
     setMobileOpen((prevState) => !prevState)
   }
 
-  const navItems = [{ key: 0, name: "Hubs", path: "/hubs" }]
+  const navItems = [
+    { key: 0, name: "Hubs", path: "/hubs" },
+    { key: 1, name: "Libraries", path: "/libraries" },
+  ]
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>

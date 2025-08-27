@@ -39,7 +39,7 @@ export default function AllCapabilities() {
   return (
     <Card raised sx={{ marginTop: "1em" }}>
       <CardHeader
-        title="All Capabilities"
+        title="Capabilities"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}
       />
       <TableContainer>

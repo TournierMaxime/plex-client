@@ -6,6 +6,7 @@ import { Box } from "@mui/material"
 import { Fragment } from "react"
 import Title from "./components/Title"
 import Hubs from "./pages/Hubs"
+import Libraries from "./pages/Libraries"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/hubs" element={<Hubs />} />
+            <Route path="/libraries" element={<Libraries />} />
           </Routes>
         </BrowserRouter>
       </Box>
