@@ -9,12 +9,19 @@ class PlaylistService {
     return data
   }
 
-  async getPlaylist(playlistID: number, type: number): Promise<Playlist> {
+  async getPlaylist(
+    playlistID: number,
+    type: number,
+    offset: number,
+    limit: number
+  ): Promise<Playlist> {
     const { data }: { data: Playlist } = await this.http.get(
       `/plex/playlists/${playlistID}`,
       {
         params: {
           type,
+          offset,
+          limit,
         },
       }
     )
