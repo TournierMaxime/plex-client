@@ -1,5 +1,5 @@
-import AllLibraries from "../components/AllLibraries"
+import Library from "../components/Library"
 
-export default function Library() {
-  return <AllLibraries />
+export default function LibraryPage() {
+  return <Library />
 }

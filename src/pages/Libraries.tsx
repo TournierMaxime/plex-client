@@ -1,15 +1,15 @@
-import { Fragment } from "react/jsx-runtime"
-import LibraryPage from "../features/library/pages/Library"
 import Title from "../components/Title"
 import Loading from "../components/Loading"
-import { Suspense } from "react"
+import { Suspense, Fragment, lazy } from "react"
+
+const LibrariesPage = lazy(() => import("../features/library/pages/Libraries"))
 
 export default function Libraries() {
   return (
     <Fragment>
       <Title title="Libraries" />
       <Suspense fallback={<Loading />}>
-        <LibraryPage />
+        <LibrariesPage />
       </Suspense>
     </Fragment>
   )

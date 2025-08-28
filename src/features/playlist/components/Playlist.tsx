@@ -22,7 +22,7 @@ export default function Playlist() {
   const { data, error, fetchData, fetchError } = useFetch<P>()
 
   useEffect(() => {
-    fetchData(playlistService.getPlaylist(Number(id), 8))
+    fetchData(playlistService.getPlaylist(Number(id), 10))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 

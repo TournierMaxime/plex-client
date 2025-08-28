@@ -1,7 +1,7 @@
 import { AxiosError } from "axios"
 import { useState } from "react"
 
-type Error = {
+export type Error = {
   message: string
   status?: number
 }

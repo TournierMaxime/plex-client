@@ -1,8 +1,8 @@
-import { Fragment } from "react/jsx-runtime"
-import HubPage from "../features/hub/pages/Hubs"
 import Title from "../components/Title"
-import { Suspense } from "react"
+import { lazy, Suspense, Fragment } from "react"
 import Loading from "../components/Loading"
+
+const HubPage = lazy(() => import("../features/hub/pages/Hubs"))
 
 export default function Hubs() {
   return (

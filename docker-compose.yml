@@ -9,6 +9,8 @@ services:
     environment:
       - PORT=${PORT}
       - REACT_APP_PLEX_API=${REACT_APP_PLEX_API}
+      - REACT_APP_URI=${REACT_APP_URI}
+      - REACT_APP_PLEX_SERVER_TOKEN=${REACT_APP_PLEX_SERVER_TOKEN}
     ports:
       - "${PORT}:${PORT}"
     volumes:

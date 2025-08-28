@@ -13,6 +13,7 @@ import { libraryService } from "../../../services/plex/Library"
 import moment from "moment"
 import { Directory, Libraries, Location } from "../../../services/types/Library"
 import useFetch from "../../../hooks/useFetch"
+import { Link } from "react-router-dom"
 
 export default function AllLibraries() {
   const { data, fetchData, fetchError, error } = useFetch<Libraries>()
@@ -21,6 +22,17 @@ export default function AllLibraries() {
     fetchData(libraryService.getAllLibraries())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const typeCase = (t: string) => {
+    switch (t) {
+      case (t = "show"):
+        return 2
+      case (t = "artist"):
+        return 8
+      default:
+        return 1
+    }
+  }
 
   return (
     <Card raised sx={{ marginTop: "1em" }}>
@@ -41,15 +53,17 @@ export default function AllLibraries() {
             </TableRow>
           </TableHead>
           {data &&
-            data.MediaContainer.Directory.sort(
-              (a, b) => b.createdAt - a.createdAt
-            ).map((directory: Directory) => {
+            data.MediaContainer.Directory.map((directory: Directory) => {
               const { uuid, key, title, type, createdAt } = directory
+
+              const t = typeCase(type)
               return (
                 <TableBody key={uuid}>
                   <TableRow>
                     <TableCell>{key}</TableCell>
-                    <TableCell>{title}</TableCell>
+                    <TableCell>
+                      <Link to={`/libraries/${key}/${t}`}>{title}</Link>
+                    </TableCell>
                     <TableCell>{type}</TableCell>
                     <TableCell>
                       {directory.Location.map(
