@@ -3,7 +3,6 @@ import {
   CardHeader,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -13,6 +12,7 @@ import { Capabilities } from "../../../services/types/Server"
 import { serverService } from "../../../services/plex/Server"
 import moment from "moment"
 import useFetch from "../../../hooks/useFetch"
+import Cell from "../../../components/Cell"
 
 export default function AllCapabilities() {
   const { data, error, fetchData, fetchError } = useFetch<Capabilities>()
@@ -44,24 +44,24 @@ export default function AllCapabilities() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>DSM</TableCell>
-              <TableCell>OS</TableCell>
-              <TableCell>Plex Version</TableCell>
-              <TableCell>Update</TableCell>
+              <Cell>ID</Cell>
+              <Cell>Name</Cell>
+              <Cell>DSM</Cell>
+              <Cell>OS</Cell>
+              <Cell>Plex Version</Cell>
+              <Cell>Update</Cell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
-              <TableCell>{machineIdentifier}</TableCell>
-              <TableCell>{friendlyName}</TableCell>
-              <TableCell>{platformVersion}</TableCell>
-              <TableCell>{platform}</TableCell>
-              <TableCell>{version}</TableCell>
-              <TableCell>
+              <Cell>{machineIdentifier}</Cell>
+              <Cell>{friendlyName}</Cell>
+              <Cell>{platformVersion}</Cell>
+              <Cell>{platform}</Cell>
+              <Cell>{version}</Cell>
+              <Cell>
                 {moment(updatedAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
-              </TableCell>
+              </Cell>
             </TableRow>
           </TableBody>
         </Table>

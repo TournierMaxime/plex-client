@@ -3,7 +3,6 @@ import {
   CardHeader,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -14,6 +13,7 @@ import moment from "moment"
 import { Directory, Libraries, Location } from "../../../services/types/Library"
 import useFetch from "../../../hooks/useFetch"
 import { Link } from "react-router-dom"
+import Cell from "../../../components/Cell"
 
 export default function AllLibraries() {
   const { data, fetchData, fetchError, error } = useFetch<Libraries>()
@@ -45,38 +45,38 @@ export default function AllLibraries() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Type</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Created at</TableCell>
+              <Cell>ID</Cell>
+              <Cell>Title</Cell>
+              <Cell>Type</Cell>
+              <Cell>Location</Cell>
+              <Cell>Created at</Cell>
             </TableRow>
           </TableHead>
-          {data &&
-            data.MediaContainer.Directory.map((directory: Directory) => {
-              const { uuid, key, title, type, createdAt } = directory
+          <TableBody>
+            {data &&
+              data.MediaContainer.Directory.map((directory: Directory) => {
+                const { uuid, key, title, type, createdAt } = directory
 
-              const t = typeCase(type)
-              return (
-                <TableBody key={uuid}>
-                  <TableRow>
-                    <TableCell>{key}</TableCell>
-                    <TableCell>
+                const t = typeCase(type)
+                return (
+                  <TableRow key={uuid}>
+                    <Cell>{key}</Cell>
+                    <Cell>
                       <Link to={`/libraries/${key}/${t}`}>{title}</Link>
-                    </TableCell>
-                    <TableCell>{type}</TableCell>
-                    <TableCell>
+                    </Cell>
+                    <Cell>{type}</Cell>
+                    <Cell>
                       {directory.Location.map(
                         (location: Location) => location.path
                       )}
-                    </TableCell>
-                    <TableCell>
+                    </Cell>
+                    <Cell>
                       {moment(createdAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
-                    </TableCell>
+                    </Cell>
                   </TableRow>
-                </TableBody>
-              )
-            })}
+                )
+              })}
+          </TableBody>
         </Table>
       </TableContainer>
     </Card>

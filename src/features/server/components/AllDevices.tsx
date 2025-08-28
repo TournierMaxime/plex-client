@@ -3,7 +3,6 @@ import {
   CardHeader,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -13,6 +12,7 @@ import { GetDevices } from "../../../services/types/Server"
 import { serverService } from "../../../services/plex/Server"
 import moment from "moment"
 import useFetch from "../../../hooks/useFetch"
+import Cell from "../../../components/Cell"
 
 export default function AllDevices() {
   const { data, error, fetchData, fetchError } = useFetch<GetDevices>()
@@ -33,33 +33,33 @@ export default function AllDevices() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Client ID</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Platform</TableCell>
-              <TableCell>Created at</TableCell>
+              <Cell>ID</Cell>
+              <Cell>Client ID</Cell>
+              <Cell>Name</Cell>
+              <Cell>Platform</Cell>
+              <Cell>Created at</Cell>
             </TableRow>
           </TableHead>
-          {data &&
-            data.object.mediaContainer.device
-              .sort((a, b) => b.createdAt - a.createdAt)
-              .map((device) => {
-                const { id, clientIdentifier, name, platform, createdAt } =
-                  device
-                return (
-                  <TableBody key={id}>
-                    <TableRow>
-                      <TableCell>{id}</TableCell>
-                      <TableCell>{clientIdentifier}</TableCell>
-                      <TableCell>{name}</TableCell>
-                      <TableCell>{platform}</TableCell>
-                      <TableCell>
+          <TableBody>
+            {data &&
+              data.object.mediaContainer.device
+                .sort((a, b) => b.createdAt - a.createdAt)
+                .map((device) => {
+                  const { id, clientIdentifier, name, platform, createdAt } =
+                    device
+                  return (
+                    <TableRow key={id}>
+                      <Cell>{id}</Cell>
+                      <Cell>{clientIdentifier}</Cell>
+                      <Cell>{name}</Cell>
+                      <Cell>{platform}</Cell>
+                      <Cell>
                         {moment(createdAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
-                      </TableCell>
+                      </Cell>
                     </TableRow>
-                  </TableBody>
-                )
-              })}
+                  )
+                })}
+          </TableBody>
         </Table>
       </TableContainer>
     </Card>

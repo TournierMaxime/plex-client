@@ -40,6 +40,7 @@ export default function RenderItems({
               <Cell>ID</Cell>
               <Cell>Cover</Cell>
               <Cell>Title</Cell>
+              <Cell>Duration</Cell>
               <Cell>Genre</Cell>
               <Cell>Country</Cell>
               <Cell>Added at</Cell>
@@ -50,8 +51,15 @@ export default function RenderItems({
               data.MediaContainer.Metadata?.sort(
                 (a, b) => b.addedAt - a.addedAt
               ).map((metadata) => {
-                const { ratingKey, title, Genre, Country, addedAt, Image } =
-                  metadata
+                const {
+                  ratingKey,
+                  title,
+                  duration,
+                  Genre,
+                  Country,
+                  addedAt,
+                  Image,
+                } = metadata
                 return (
                   <TableRow key={ratingKey}>
                     <Cell>{ratingKey}</Cell>
@@ -76,6 +84,7 @@ export default function RenderItems({
                       )}
                     </Cell>
                     <Cell>{title}</Cell>
+                    <Cell>{moment.utc(duration).format("HH:mm:ss")}</Cell>
                     <Cell>
                       {Genre?.map((g) => (
                         <Tag key={g.tag} label={g.tag} />

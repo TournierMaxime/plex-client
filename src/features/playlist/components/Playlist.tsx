@@ -68,23 +68,23 @@ export default function Playlist() {
                 <Cell>Added at</Cell>
               </TableRow>
             </TableHead>
-            {data &&
-              data.items.map((metadata) => {
-                const { ratingKey, title, addedAt, thumb, duration, media } =
-                  metadata
+            <TableBody>
+              {data &&
+                data.items.map((metadata) => {
+                  const { ratingKey, title, addedAt, thumb, duration, media } =
+                    metadata
 
-                const path = media.map((m) =>
-                  m.part.map((p) => p.file.split("/").slice(0, 5).join("/"))
-                )
-                const file = media.map((m) =>
-                  m.part.map((p) => p.file.split("/").slice(5).join(" "))
-                )
+                  const path = media.map((m) =>
+                    m.part.map((p) => p.file.split("/").slice(0, 5).join("/"))
+                  )
+                  const file = media.map((m) =>
+                    m.part.map((p) => p.file.split("/").slice(5).join(" "))
+                  )
 
-                const listen = media.map((m) => m.part.map((p) => p.key))
+                  const listen = media.map((m) => m.part.map((p) => p.key))
 
-                return (
-                  <TableBody key={ratingKey}>
-                    <TableRow>
+                  return (
+                    <TableRow key={ratingKey}>
                       <Cell>{ratingKey}</Cell>
                       <Cell>
                         <img
@@ -115,9 +115,9 @@ export default function Playlist() {
                         {moment(addedAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
                       </Cell>
                     </TableRow>
-                  </TableBody>
-                )
-              })}
+                  )
+                })}
+            </TableBody>
           </Table>
           <Pagination count={count} />
         </TableContainer>
