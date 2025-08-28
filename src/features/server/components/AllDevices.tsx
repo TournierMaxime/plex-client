@@ -8,24 +8,23 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { GetDevices } from "../../../services/types/Server"
 import { serverService } from "../../../services/plex/Server"
 import moment from "moment"
+import useFetch from "../../../hooks/useFetch"
 
 export default function AllDevices() {
-  const [data, setData] = useState<GetDevices>()
-
-  const fetchData = async () => {
-    const response = await serverService.getDevices()
-    setData(response)
-  }
+  const { data, error, fetchData, fetchError } = useFetch<GetDevices>()
 
   useEffect(() => {
-    fetchData()
+    fetchData(serverService.getDevices())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
   return (
     <Card raised sx={{ marginTop: "1em" }}>
+      {error ? fetchError() : null}
       <CardHeader
         title="Devices"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}
@@ -45,17 +44,17 @@ export default function AllDevices() {
             data.object.mediaContainer.device
               .sort((a, b) => b.createdAt - a.createdAt)
               .map((device) => {
+                const { id, clientIdentifier, name, platform, createdAt } =
+                  device
                 return (
-                  <TableBody key={device.id}>
+                  <TableBody key={id}>
                     <TableRow>
-                      <TableCell>{device.id}</TableCell>
-                      <TableCell>{device.clientIdentifier}</TableCell>
-                      <TableCell>{device.name}</TableCell>
-                      <TableCell>{device.platform}</TableCell>
+                      <TableCell>{id}</TableCell>
+                      <TableCell>{clientIdentifier}</TableCell>
+                      <TableCell>{name}</TableCell>
+                      <TableCell>{platform}</TableCell>
                       <TableCell>
-                        {moment(device.createdAt * 1000).format(
-                          "DD/MM/YYYY HH:mm:ss"
-                        )}
+                        {moment(createdAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
                       </TableCell>
                     </TableRow>
                   </TableBody>

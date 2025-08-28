@@ -1,7 +1,8 @@
-import { Fragment, Suspense } from "react"
-import Devices from "../features/server/pages/Devices"
-import Capabilities from "../features/server/pages/Capabilities"
+import { Fragment, Suspense, lazy } from "react"
 import Loading from "../components/Loading"
+
+const Devices = lazy(() => import("../features/server/pages/Devices"))
+const Capabilities = lazy(() => import("../features/server/pages/Capabilities"))
 
 export default function Home() {
   return (

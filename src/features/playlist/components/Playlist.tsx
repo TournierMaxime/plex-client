@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { playlistService } from "../../../services/plex/Playlists"
 import { Playlist as P } from "../../../services/types/Playlists"
-import { useState, useEffect, Fragment } from "react"
+import { useEffect, Fragment } from "react"
 import {
   Alert,
   Card,
@@ -14,19 +14,15 @@ import {
   TableRow,
 } from "@mui/material"
 import moment from "moment"
+import useFetch from "../../../hooks/useFetch"
 
 export default function Playlist() {
   const { id } = useParams()
 
-  const [data, setData] = useState<P>()
-
-  const fetchData = async () => {
-    const response = await playlistService.getPlaylist(Number(id), 8)
-    setData(response)
-  }
+  const { data, error, fetchData, fetchError } = useFetch<P>()
 
   useEffect(() => {
-    fetchData()
+    fetchData(playlistService.getPlaylist(Number(id), 8))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
@@ -34,43 +30,50 @@ export default function Playlist() {
 
   return (
     <Fragment>
-      {data?.playlist.object.mediaContainer.metadata.map((metadata) => {
-        return (
-          <Card key={metadata.ratingKey} sx={{ marginTop: "1em" }}>
-            <CardHeader title={metadata.title} />
-          </Card>
-        )
-      })}
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Genre</TableCell>
-              <TableCell>Country</TableCell>
-              <TableCell>Added at</TableCell>
-            </TableRow>
-          </TableHead>
-          {data?.items.object.mediaContainer.metadata.map((metadata) => {
+      <Card sx={{ marginTop: "1em" }}>
+        {error ? fetchError() : null}
+        {data &&
+          data.playlist.object.mediaContainer.metadata.map((metadata) => {
+            const { ratingKey, title } = metadata
             return (
-              <TableBody key={metadata.ratingKey}>
-                <TableRow key={metadata.ratingKey}>
-                  <TableCell>{metadata.ratingKey}</TableCell>
-                  <TableCell>{metadata.title}</TableCell>
-                  <TableCell>{metadata.genre?.map((g) => g.tag)}</TableCell>
-                  <TableCell>{metadata.country?.map((c) => c.tag)}</TableCell>
-                  <TableCell>
-                    {moment(metadata.addedAt * 1000).format(
-                      "DD/MM/YYYY HH:mm:ss"
-                    )}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
+              <CardHeader
+                key={ratingKey}
+                slotProps={{ title: { sx: { fontSize: "1.2em" } } }}
+                title={title}
+              />
             )
           })}
-        </Table>
-      </TableContainer>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell>Genre</TableCell>
+                <TableCell>Country</TableCell>
+                <TableCell>Added at</TableCell>
+              </TableRow>
+            </TableHead>
+            {data &&
+              data.items.object.mediaContainer.metadata.map((metadata) => {
+                const { ratingKey, title, genre, country, addedAt } = metadata
+                return (
+                  <TableBody key={ratingKey}>
+                    <TableRow>
+                      <TableCell>{ratingKey}</TableCell>
+                      <TableCell>{title}</TableCell>
+                      <TableCell>{genre?.map((g) => g.tag)}</TableCell>
+                      <TableCell>{country?.map((c) => c.tag)}</TableCell>
+                      <TableCell>
+                        {moment(addedAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                )
+              })}
+          </Table>
+        </TableContainer>
+      </Card>
     </Fragment>
   )
 }

@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["dom", "esnext"],
     "jsx": "react-jsx",
     "moduleResolution": "node", // ou "bundler" si tu es sur Next/Vite
     "esModuleInterop": true,

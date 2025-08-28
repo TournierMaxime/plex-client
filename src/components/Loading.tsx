@@ -1,8 +1,8 @@
-import React from "react"
+import { Box } from "@mui/material"
 
 export default function Loading() {
   return (
-    <div
+    <Box
       style={{
         display: "flex",
         flexDirection: "row",
@@ -11,6 +11,6 @@ export default function Loading() {
       }}
     >
       Loading...
-    </div>
+    </Box>
   )
 }

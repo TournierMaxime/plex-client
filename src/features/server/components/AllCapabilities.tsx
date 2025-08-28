@@ -8,21 +8,18 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Capabilities } from "../../../services/types/Server"
 import { serverService } from "../../../services/plex/Server"
 import moment from "moment"
+import useFetch from "../../../hooks/useFetch"
 
 export default function AllCapabilities() {
-  const [data, setData] = useState<Capabilities>()
-
-  const fetchData = async () => {
-    const response = await serverService.getServerCapabilities()
-    setData(response)
-  }
+  const { data, error, fetchData, fetchError } = useFetch<Capabilities>()
 
   useEffect(() => {
-    fetchData()
+    fetchData(serverService.getServerCapabilities())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!data) return null
@@ -38,6 +35,7 @@ export default function AllCapabilities() {
 
   return (
     <Card raised sx={{ marginTop: "1em" }}>
+      {error ? fetchError() : null}
       <CardHeader
         title="Capabilities"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}

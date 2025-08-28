@@ -24,28 +24,29 @@ export default function OneHub({ data }: { data: Hub }) {
           </TableRow>
         </TableHead>
         {data?.metadata?.map((metadata: MetaData) => {
+          const {
+            key,
+            title,
+            type,
+            duration,
+            lastViewedAt,
+            addedAt,
+            updatedAt,
+          } = metadata
           return (
-            <TableBody key={metadata.key}>
+            <TableBody key={key}>
               <TableRow>
-                <TableCell>{metadata.title}</TableCell>
-                <TableCell>{metadata.type}</TableCell>
+                <TableCell>{title}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>{moment.utc(duration).format("HH:mm:ss")}</TableCell>
                 <TableCell>
-                  {moment.utc(metadata.duration).format("HH:mm:ss")}
+                  {moment(lastViewedAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
                 </TableCell>
                 <TableCell>
-                  {moment(metadata.lastViewedAt * 1000).format(
-                    "DD/MM/YYYY HH:mm:ss"
-                  )}
+                  {moment(addedAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
                 </TableCell>
                 <TableCell>
-                  {moment(metadata.addedAt * 1000).format(
-                    "DD/MM/YYYY HH:mm:ss"
-                  )}
-                </TableCell>
-                <TableCell>
-                  {moment(metadata.updatedAt * 1000).format(
-                    "DD/MM/YYYY HH:mm:ss"
-                  )}
+                  {moment(updatedAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
                 </TableCell>
               </TableRow>
             </TableBody>

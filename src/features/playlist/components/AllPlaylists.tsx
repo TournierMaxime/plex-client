@@ -8,25 +8,23 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { playlistService } from "../../../services/plex/Playlists"
 import moment from "moment"
 import { Playlists } from "../../../services/types/Playlists"
 import { Link } from "react-router-dom"
+import useFetch from "../../../hooks/useFetch"
 
 export default function AllPlaylists() {
-  const [data, setData] = useState<Playlists>()
-
-  const fetchData = async () => {
-    const response = await playlistService.getPlaylists()
-    setData(response)
-  }
+  const { data, fetchData, fetchError, error } = useFetch<Playlists>()
 
   useEffect(() => {
-    fetchData()
+    fetchData(playlistService.getPlaylists())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <Card raised sx={{ marginTop: "1em" }}>
+      {error ? fetchError() : null}
       <CardHeader
         title="Playlists"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}
@@ -46,23 +44,20 @@ export default function AllPlaylists() {
             data.object.mediaContainer.metadata
               .sort((a, b) => b.addedAt - a.addedAt)
               .map((metadata) => {
+                const { ratingKey, title, type, duration, addedAt } = metadata
                 return (
-                  <TableBody key={metadata.ratingKey}>
+                  <TableBody key={ratingKey}>
                     <TableRow>
-                      <TableCell>{metadata.ratingKey}</TableCell>
+                      <TableCell>{ratingKey}</TableCell>
                       <TableCell>
-                        <Link to={`/playlists/${metadata.ratingKey}`}>
-                          {metadata.title}
-                        </Link>
+                        <Link to={`/playlists/${ratingKey}`}>{title}</Link>
                       </TableCell>
-                      <TableCell>{metadata.type}</TableCell>
+                      <TableCell>{type}</TableCell>
                       <TableCell>
-                        {moment.utc(metadata.duration).format("HH:mm:ss")}
+                        {moment.utc(duration).format("HH:mm:ss")}
                       </TableCell>
                       <TableCell>
-                        {moment(metadata.addedAt * 1000).format(
-                          "DD/MM/YYYY HH:mm:ss"
-                        )}
+                        {moment(addedAt * 1000).format("DD/MM/YYYY HH:mm:ss")}
                       </TableCell>
                     </TableRow>
                   </TableBody>
