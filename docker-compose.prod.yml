@@ -2,7 +2,7 @@ services:
   server:
     container_name: plex-client-prod
 
-    command: sh -c "npm run build && npm run start:prod"
+    command: npm run start:prod
 
     environment:
       - PORT=${PORT}
