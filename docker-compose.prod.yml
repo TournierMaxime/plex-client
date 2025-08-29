@@ -4,6 +4,8 @@ services:
 
     command: npm run start:prod
 
+    restart: always
+
     environment:
       - PORT=${PORT}
       - REACT_APP_PLEX_API=${REACT_APP_PLEX_API}
