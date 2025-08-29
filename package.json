@@ -27,7 +27,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start:prod": "serve -s build -l 3601",
-    "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d && npm run build"
+    "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --build -d"
   },
   "eslintConfig": {
     "extends": [
