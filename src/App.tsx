@@ -11,6 +11,7 @@ import PlaylistsPage from "./pages/Playlists"
 import OnePlaylist from "./features/playlist/pages/OnePlaylist"
 import LibraryPage from "./features/library/pages/Library"
 import PaginationProvider from "./context/PaginationContext"
+import Devices from "./pages/Devices"
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="/libraries/:id/:type" element={<LibraryPage />} />
               <Route path="/playlists" element={<PlaylistsPage />} />
               <Route path="/playlists/:id" element={<OnePlaylist />} />
+              <Route path="/devices" element={<Devices />} />
             </Routes>
           </BrowserRouter>
         </Box>
