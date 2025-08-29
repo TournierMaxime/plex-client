@@ -1,5 +1,11 @@
 import { plexApi as http } from "../../../services/axios"
-import { Capabilities, GetDevices, GetMyPlexAccount } from "../types/Server"
+import {
+  Capabilities,
+  GetDevices,
+  GetMyPlexAccount,
+  Resources,
+  Users,
+} from "../types/Server"
 
 class ServerService {
   private http = http
@@ -22,6 +28,18 @@ class ServerService {
     const { data }: { data: Capabilities } = await this.http.get(
       `/plex/server/capabilities`
     )
+    return data
+  }
+
+  async getServerResources(): Promise<Resources> {
+    const { data }: { data: Resources } = await this.http.get(
+      `/plex/server/resources`
+    )
+    return data
+  }
+
+  async getServerUsers(): Promise<Users> {
+    const { data }: { data: Users } = await this.http.get(`/plex/server/users`)
     return data
   }
 }

@@ -154,4 +154,88 @@ interface Capabilities {
   serverList: GetServerList
 }
 
-export { GetMyPlexAccount, GetDevices, GetServerCapabilities, Capabilities }
+interface Resources {
+  resources: Resource[]
+}
+
+interface Resource {
+  name: string
+  product: string
+  productVersion: string
+  platform: string
+  platformVersion: string
+  device: string
+  clientIdentifier: string
+  provides: string
+  ownerId: null
+  sourceTitle: null
+  publicAddress: string
+  accessToken: string
+  searchEnabled: boolean
+  createdAt: string
+  lastSeenAt: string
+  owned: boolean
+  home: boolean
+  synced: boolean
+  relay: boolean
+  presence: boolean
+  httpsRequired: boolean
+  publicAddressMatches: boolean
+  dnsRebindingProtection: boolean
+  natLoopbackSupported: boolean
+  connections: Connection[]
+}
+
+interface Connection {
+  protocol: string
+  address: string
+  port: number
+  uri: string
+  local: boolean
+  relay: boolean
+  IPv6: boolean
+}
+
+interface Users {
+  id: number
+  name: string
+  guestUserID: number
+  guestUserUUID: string
+  guestEnabled: boolean
+  subscription: boolean
+  users: User[]
+}
+
+interface User {
+  id: number
+  uuid: string
+  title: string
+  username: string
+  email: string
+  friendlyName: null
+  thumb: string
+  hasPassword: boolean
+  restricted: boolean
+  updatedAt: number
+  restrictionProfile: null
+  admin: boolean
+  guest: boolean
+  protected: boolean
+  pin: string
+  subscription: {
+    state: string
+    type: string
+  }
+}
+
+export {
+  GetMyPlexAccount,
+  GetDevices,
+  GetServerCapabilities,
+  Capabilities,
+  Users,
+  User,
+  Resources,
+  Resource,
+  Connection,
+}
