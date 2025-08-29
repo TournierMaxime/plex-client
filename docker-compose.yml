@@ -1,17 +1,13 @@
 services:
   server:
-    container_name: plex-client
     build:
       context: .
       dockerfile: node.Dockerfile
+
     working_dir: /var/app
-    command: npm start
-    environment:
-      - PORT=${PORT}
-      - REACT_APP_PLEX_API=${REACT_APP_PLEX_API}
-      - REACT_APP_URI=${REACT_APP_URI}
-      - REACT_APP_PLEX_SERVER_TOKEN=${REACT_APP_PLEX_SERVER_TOKEN}
+
     ports:
       - "${PORT}:${PORT}"
+
     volumes:
       - .:/var/app

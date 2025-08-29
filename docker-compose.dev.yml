@@ -1,0 +1,11 @@
+services:
+  server:
+    container_name: plex-client
+
+    command: npm start
+
+    environment:
+      - PORT=${PORT}
+      - REACT_APP_PLEX_API=${REACT_APP_PLEX_API}
+      - REACT_APP_URI=${REACT_APP_URI}
+      - REACT_APP_PLEX_SERVER_TOKEN=${REACT_APP_PLEX_SERVER_TOKEN}

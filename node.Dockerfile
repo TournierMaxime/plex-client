@@ -20,9 +20,3 @@ RUN npm ci
 
 # Copie les fichiers de l’app dans l’image
 COPY . .
-
-# Build l’app (si nécessaire pour ton projet Next.js)
-#RUN npm run build
-
-# Définit la commande de démarrage
-CMD ["npm", "start"]
