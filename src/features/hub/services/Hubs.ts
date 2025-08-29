@@ -1,4 +1,4 @@
-import { plexApi as http } from "../../services/axios"
+import { plexApi as http } from "../../../services/axios"
 import { GetHubs } from "../types/Hubs"
 
 class HubService {

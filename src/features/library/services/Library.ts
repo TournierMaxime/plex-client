@@ -1,4 +1,4 @@
-import { plexApi as http } from "../../services/axios"
+import { plexApi as http } from "../../../services/axios"
 import { Libraries, Library } from "../types/Library"
 
 class LibraryService {

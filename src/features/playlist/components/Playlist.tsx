@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom"
-import { playlistService } from "../../../services/plex/Playlists"
-import { Playlist as P } from "../../../services/types/Playlists"
+import { playlistService } from "../services/Playlists"
+import { Playlist as P } from "../types/Playlists"
 import { useEffect, Fragment } from "react"
 import {
   Alert,

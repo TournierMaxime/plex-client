@@ -5,7 +5,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { Hub, MetaData } from "../../../services/types/Hubs"
+import { Hub, MetaData } from "../types/Hubs"
 import moment from "moment"
 import Cell from "../../../components/Cell"
 

@@ -8,9 +8,9 @@ import {
   TableRow,
 } from "@mui/material"
 import { useEffect } from "react"
-import { libraryService } from "../../../services/plex/Library"
+import { libraryService } from "../services/Library"
 import moment from "moment"
-import { Directory, Libraries, Location } from "../../../services/types/Library"
+import { Directory, Libraries, Location } from "../types/Library"
 import useFetch from "../../../hooks/useFetch"
 import { Link } from "react-router-dom"
 import Cell from "../../../components/Cell"

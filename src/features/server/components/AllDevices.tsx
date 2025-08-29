@@ -8,8 +8,8 @@ import {
   TableRow,
 } from "@mui/material"
 import { useEffect } from "react"
-import { GetDevices } from "../../../services/types/Server"
-import { serverService } from "../../../services/plex/Server"
+import { GetDevices } from "../types/Server"
+import { serverService } from "../services/Server"
 import moment from "moment"
 import useFetch from "../../../hooks/useFetch"
 import Cell from "../../../components/Cell"

@@ -1,7 +1,7 @@
 import { Card, CardHeader } from "@mui/material"
 import { Fragment, useEffect } from "react"
-import { hubService } from "../../../services/plex/Hubs"
-import { GetHubs, Hub } from "../../../services/types/Hubs"
+import { hubService } from "../services/Hubs"
+import { GetHubs, Hub } from "../types/Hubs"
 import OneHub from "./OneHub"
 import useFetch from "../../../hooks/useFetch"
 

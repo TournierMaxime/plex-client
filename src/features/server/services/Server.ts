@@ -1,4 +1,4 @@
-import { plexApi as http } from "../../services/axios"
+import { plexApi as http } from "../../../services/axios"
 import { Capabilities, GetDevices, GetMyPlexAccount } from "../types/Server"
 
 class ServerService {

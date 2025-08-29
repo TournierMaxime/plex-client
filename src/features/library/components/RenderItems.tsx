@@ -1,5 +1,5 @@
 import { JSX } from "react"
-import { Library as L } from "../../../services/types/Library"
+import { Library as L } from "../types/Library"
 import {
   Card,
   CardHeader,
