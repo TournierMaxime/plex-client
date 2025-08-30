@@ -37,11 +37,6 @@ class ServerService {
     )
     return data
   }
-
-  async getServerUsers(): Promise<Users> {
-    const { data }: { data: Users } = await this.http.get(`/plex/server/users`)
-    return data
-  }
 }
 
 export const serverService = new ServerService()

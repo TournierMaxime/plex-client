@@ -12,6 +12,8 @@ import OnePlaylist from "./features/playlist/pages/OnePlaylist"
 import LibraryPage from "./features/library/pages/Library"
 import PaginationProvider from "./context/PaginationContext"
 import Devices from "./pages/Devices"
+import Users from "./pages/Users"
+import OneUser from "./features/users/pages/OneUser"
 
 function App() {
   return (
@@ -29,6 +31,11 @@ function App() {
               <Route path="/playlists" element={<PlaylistsPage />} />
               <Route path="/playlists/:id" element={<OnePlaylist />} />
               <Route path="/devices" element={<Devices />} />
+              <Route path="/users" element={<Users />} />
+              <Route
+                path="/users/:id/history/:username/library/:librarySectionId"
+                element={<OneUser />}
+              />
             </Routes>
           </BrowserRouter>
         </Box>

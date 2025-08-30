@@ -8,17 +8,18 @@ import {
   TableRow,
 } from "@mui/material"
 import { useEffect } from "react"
-import { Users } from "../types/Server"
-import { serverService } from "../services/Server"
+import { Users } from "../../users/types/Users"
+import { userService } from "../../users/services/Users"
 import moment from "moment"
 import useFetch from "../../../hooks/useFetch"
 import Cell from "../../../components/Cell"
+import { Link } from "react-router-dom"
 
 export default function AllUsers() {
   const { data, error, fetchData, fetchError } = useFetch<Users>()
 
   useEffect(() => {
-    fetchData(serverService.getServerUsers())
+    fetchData(userService.getUsers())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -35,7 +36,7 @@ export default function AllUsers() {
             <TableRow>
               <Cell>ID</Cell>
               <Cell>UUID</Cell>
-              <Cell>UserName</Cell>
+              <Cell>User</Cell>
               <Cell>Image</Cell>
               <Cell>Admin</Cell>
               <Cell>Protected</Cell>
@@ -61,11 +62,26 @@ export default function AllUsers() {
                     guest: isGuest,
                     restricted: isRestricted,
                   } = device
+
+                  let adminId
+
+                  if (username === "Hoggy06") {
+                    adminId = 1
+                  }
+
                   return (
                     <TableRow key={id}>
                       <Cell>{id}</Cell>
                       <Cell>{uuid}</Cell>
-                      <Cell>{username ?? title}</Cell>
+                      <Cell>
+                        <Link
+                          to={`/users/${adminId ? adminId : id}/history/${
+                            username ?? title
+                          }/library/1`}
+                        >
+                          {username ?? title}
+                        </Link>
+                      </Cell>
                       <Cell>
                         <img
                           src={thumb}

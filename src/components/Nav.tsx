@@ -30,6 +30,7 @@ export default function Nav() {
     { key: 1, name: "Libraries", path: "/libraries" },
     { key: 2, name: "Playlists", path: "/playlists" },
     { key: 3, name: "Devices", path: "/devices" },
+    { key: 4, name: "Users", path: "/users" },
   ]
 
   const drawer = (
