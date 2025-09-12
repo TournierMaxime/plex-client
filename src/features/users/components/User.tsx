@@ -1,8 +1,8 @@
-import useFetch from "../../../hooks/useFetch"
+import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import { userService } from "../services/Users"
 import { History } from "../types/Users"
-import { useEffect, Fragment } from "react"
+import { Fragment } from "react"
 import {
   Alert,
   Card,
@@ -16,18 +16,18 @@ import {
 import moment from "moment"
 import Title from "../../../components/Title"
 import Cell from "../../../components/Cell"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 export default function User() {
   const { id, username, librarySectionId } = useParams()
 
-  const { data, error, fetchData, fetchError } = useFetch<History>()
-
-  useEffect(() => {
-    fetchData(
-      userService.getSessionHistory(Number(id), Number(librarySectionId))
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, username])
+  const { data, error } = useQuery<History>({
+    queryKey: ["users", id, username, librarySectionId],
+    queryFn: () =>
+      userService.getSessionHistory(Number(id), Number(librarySectionId)),
+    staleTime: STALE_TIME,
+  })
 
   if (!id && !username)
     return <Alert severity="warning">History not founded</Alert>
@@ -36,7 +36,7 @@ export default function User() {
     <Fragment>
       <Title title={`${username}'s History`} />
       <Card sx={{ marginTop: "1em" }}>
-        {error ? fetchError() : null}
+        {error ? <Error error={error} /> : null}
         <CardHeader
           slotProps={{ title: { sx: { fontSize: "1.2em" } } }}
           title={`${username}'s History`}

@@ -7,24 +7,24 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect } from "react"
-import { GetDevices } from "../types/Server"
-import { serverService } from "../services/Server"
+import { GetDevices } from "../../server/types/Server"
+import { serverService } from "../../server/services/Server"
 import moment from "moment"
-import useFetch from "../../../hooks/useFetch"
+import { useQuery } from "@tanstack/react-query"
 import Cell from "../../../components/Cell"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 export default function AllDevices() {
-  const { data, error, fetchData, fetchError } = useFetch<GetDevices>()
-
-  useEffect(() => {
-    fetchData(serverService.getDevices())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data, error } = useQuery<GetDevices>({
+    queryKey: ["devices"],
+    queryFn: () => serverService.getDevices(),
+    staleTime: STALE_TIME,
+  })
 
   return (
     <Card raised sx={{ marginTop: "1em" }}>
-      {error ? fetchError() : null}
+      {error ? <Error error={error} /> : null}
       <CardHeader
         title="Devices"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}

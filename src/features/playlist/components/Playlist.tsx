@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom"
 import { playlistService } from "../services/Playlists"
 import { Playlist as P } from "../types/Playlists"
-import { useEffect, Fragment } from "react"
+import { Fragment } from "react"
 import {
   Alert,
   Card,
@@ -13,26 +13,27 @@ import {
   TableRow,
 } from "@mui/material"
 import moment from "moment"
-import useFetch from "../../../hooks/useFetch"
+import { useQuery } from "@tanstack/react-query"
 import Pagination from "../../../components/Pagination"
 import Title from "../../../components/Title"
 import { usePagination } from "../../../context/PaginationContext"
 import Cell from "../../../components/Cell"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 export default function Playlist() {
   const { id } = useParams()
 
-  const { data, error, fetchData, fetchError } = useFetch<P>()
-
   const { offset, limit } = usePagination()
+
+  const { data, error } = useQuery<P>({
+    queryKey: ["playlist", id, offset, limit],
+    queryFn: () => playlistService.getPlaylist(Number(id), 10, offset, limit),
+    staleTime: STALE_TIME,
+  })
 
   const count =
     (data && data.playlist.object.mediaContainer.metadata[0].leafCount) ?? -1
-
-  useEffect(() => {
-    fetchData(playlistService.getPlaylist(Number(id), 10, offset, limit))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, offset, limit])
 
   if (!id) return <Alert severity="warning">Playlist not founded</Alert>
 
@@ -42,7 +43,7 @@ export default function Playlist() {
         title={data && data.playlist.object.mediaContainer.metadata[0].title}
       />
       <Card sx={{ marginTop: "1em" }}>
-        {error ? fetchError() : null}
+        {error ? <Error error={error} /> : null}
         {data &&
           data.playlist.object.mediaContainer.metadata.map((metadata) => {
             const { ratingKey, title } = metadata

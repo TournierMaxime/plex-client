@@ -7,24 +7,24 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect } from "react"
 import { Resources } from "../types/Server"
 import { serverService } from "../services/Server"
 import moment from "moment"
-import useFetch from "../../../hooks/useFetch"
+import { useQuery } from "@tanstack/react-query"
 import Cell from "../../../components/Cell"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 export default function AllResources() {
-  const { data, error, fetchData, fetchError } = useFetch<Resources>()
-
-  useEffect(() => {
-    fetchData(serverService.getServerResources())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data, error } = useQuery<Resources>({
+    queryKey: ["resources"],
+    queryFn: () => serverService.getServerResources(),
+    staleTime: STALE_TIME,
+  })
 
   return (
     <Card raised sx={{ marginTop: "1em" }}>
-      {error ? fetchError() : null}
+      {error ? <Error error={error} /> : null}
       <CardHeader
         title="Resources"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}

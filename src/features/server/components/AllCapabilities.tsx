@@ -7,20 +7,20 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect } from "react"
 import { Capabilities } from "../types/Server"
 import { serverService } from "../services/Server"
 import moment from "moment"
-import useFetch from "../../../hooks/useFetch"
 import Cell from "../../../components/Cell"
+import { useQuery } from "@tanstack/react-query"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 export default function AllCapabilities() {
-  const { data, error, fetchData, fetchError } = useFetch<Capabilities>()
-
-  useEffect(() => {
-    fetchData(serverService.getServerCapabilities())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data, error } = useQuery<Capabilities>({
+    queryKey: ["capabilities"],
+    queryFn: () => serverService.getServerCapabilities(),
+    staleTime: STALE_TIME,
+  })
 
   if (!data) return null
 
@@ -35,7 +35,7 @@ export default function AllCapabilities() {
 
   return (
     <Card raised sx={{ marginTop: "1em" }}>
-      {error ? fetchError() : null}
+      {error ? <Error error={error} /> : null}
       <CardHeader
         title="Capabilities"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}

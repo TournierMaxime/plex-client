@@ -7,25 +7,25 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect } from "react"
 import { Users } from "../../users/types/Users"
 import { userService } from "../../users/services/Users"
 import moment from "moment"
-import useFetch from "../../../hooks/useFetch"
+import { useQuery } from "@tanstack/react-query"
 import Cell from "../../../components/Cell"
 import { Link } from "react-router-dom"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 export default function AllUsers() {
-  const { data, error, fetchData, fetchError } = useFetch<Users>()
-
-  useEffect(() => {
-    fetchData(userService.getUsers())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data, error } = useQuery<Users>({
+    queryKey: ["users"],
+    queryFn: () => userService.getUsers(),
+    staleTime: STALE_TIME,
+  })
 
   return (
     <Card raised sx={{ marginTop: "1em" }}>
-      {error ? fetchError() : null}
+      {error ? <Error error={error} /> : null}
       <CardHeader
         title="Users"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}

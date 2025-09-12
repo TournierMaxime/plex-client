@@ -4,7 +4,6 @@ import {
   GetDevices,
   GetMyPlexAccount,
   Resources,
-  Users,
 } from "../types/Server"
 
 class ServerService {

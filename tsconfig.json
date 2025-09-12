@@ -2,7 +2,8 @@
   "compilerOptions": {
     "lib": ["dom", "esnext"],
     "jsx": "react-jsx",
-    "moduleResolution": "node", // ou "bundler" si tu es sur Next/Vite
+    "module": "es2020",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "strict": true
   },

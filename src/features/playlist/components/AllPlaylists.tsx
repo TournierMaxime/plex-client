@@ -7,24 +7,24 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect } from "react"
 import { playlistService } from "../services/Playlists"
 import moment from "moment"
 import { Playlists } from "../types/Playlists"
 import { Link } from "react-router-dom"
-import useFetch from "../../../hooks/useFetch"
+import { useQuery } from "@tanstack/react-query"
 import Cell from "../../../components/Cell"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 export default function AllPlaylists() {
-  const { data, fetchData, fetchError, error } = useFetch<Playlists>()
-
-  useEffect(() => {
-    fetchData(playlistService.getPlaylists())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data, error } = useQuery<Playlists>({
+    queryKey: ["playlists"],
+    queryFn: () => playlistService.getPlaylists(),
+    staleTime: STALE_TIME,
+  })
   return (
     <Card raised sx={{ marginTop: "1em" }}>
-      {error ? fetchError() : null}
+      {error ? <Error error={error} /> : null}
       <CardHeader
         title="Playlists"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}

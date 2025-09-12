@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom"
-import { Fragment, useEffect, Suspense, lazy } from "react"
+import { Fragment, Suspense, lazy } from "react"
 import { libraryService } from "../services/Library"
 import { Library as L } from "../types/Library"
 import { Alert } from "@mui/material"
-import useFetch from "../../../hooks/useFetch"
+import { useQuery } from "@tanstack/react-query"
 import Title from "../../../components/Title"
 import Loading from "../../../components/Loading"
 import { usePagination } from "../../../context/PaginationContext"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 const RenderItems = lazy(() => import("../components/RenderItems"))
 
@@ -15,21 +17,24 @@ export default function Library() {
 
   const { offset, limit } = usePagination()
 
-  const { data, error, fetchData, fetchError } = useFetch<L>()
+  const enabled = !!id && !!type
 
-  useEffect(() => {
-    if (id && type)
-      fetchData(libraryService.getLibrary(id, Number(type), offset, limit))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, type, offset, limit])
+  const { data, error } = useQuery<L>({
+    queryKey: ["library", id, type, offset, limit],
+    queryFn: () => libraryService.getLibrary(id!, Number(type), offset, limit),
+    enabled,
+    staleTime: STALE_TIME,
+  })
 
   if (!id) return <Alert severity="warning">Library not founded</Alert>
+
+  if (error) return <Error error={error} />
 
   return (
     <Fragment>
       <Title title={data && data.MediaContainer.title1} />
       <Suspense fallback={<Loading />}>
-        <RenderItems data={data} error={error} fetchError={fetchError} />
+        <RenderItems data={data} />
       </Suspense>
     </Fragment>
   )

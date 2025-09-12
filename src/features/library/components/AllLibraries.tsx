@@ -7,21 +7,21 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material"
-import { useEffect } from "react"
 import { libraryService } from "../services/Library"
 import moment from "moment"
 import { Directory, Libraries, Location } from "../types/Library"
-import useFetch from "../../../hooks/useFetch"
+import { useQuery } from "@tanstack/react-query"
 import { Link } from "react-router-dom"
 import Cell from "../../../components/Cell"
+import Error from "../../../components/Error"
+import { STALE_TIME } from "../../../constants"
 
 export default function AllLibraries() {
-  const { data, fetchData, fetchError, error } = useFetch<Libraries>()
-
-  useEffect(() => {
-    fetchData(libraryService.getAllLibraries())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { data, error } = useQuery<Libraries>({
+    queryKey: ["libraries"],
+    queryFn: () => libraryService.getAllLibraries(),
+    staleTime: STALE_TIME,
+  })
 
   const typeCase = (t: string) => {
     switch (t) {
@@ -36,7 +36,7 @@ export default function AllLibraries() {
 
   return (
     <Card raised sx={{ marginTop: "1em" }}>
-      {error ? fetchError() : null}
+      {error ? <Error error={error} /> : null}
       <CardHeader
         title="Libraries"
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}

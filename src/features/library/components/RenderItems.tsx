@@ -1,4 +1,3 @@
-import { JSX } from "react"
 import { Library as L } from "../types/Library"
 import {
   Card,
@@ -12,23 +11,17 @@ import {
 import moment from "moment"
 import Tag from "../../../components/Tag"
 import Cell from "../../../components/Cell"
-import type { Error } from "../../../hooks/useFetch"
 import Pagination from "../../../components/Pagination"
 
-export default function RenderItems({
-  data,
-  error,
-  fetchError,
-}: {
+export type RenderItemsProps = {
   data: L | undefined
-  error: Error | undefined
-  fetchError: () => JSX.Element
-}) {
+}
+
+export default function RenderItems({ data }: RenderItemsProps) {
   const count = (data && data.MediaContainer.totalSize) ?? -1
 
   return (
     <Card sx={{ marginTop: "1em" }}>
-      {error ? fetchError() : null}
       <CardHeader
         slotProps={{ title: { sx: { fontSize: "1.2em" } } }}
         title={data && data.MediaContainer.title1}
